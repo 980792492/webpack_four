@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import findIndex from 'lodash/findIndex'
 // import Style from './style.css'
 
-import './app.less'
+// import './app.less'
 // import Icon from './icon.jpg'
 import { Button, Row, Col } from 'antd'
 
