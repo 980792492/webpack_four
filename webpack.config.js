@@ -29,15 +29,12 @@ module.exports = {
   },
   resolve: {
     // extensions: ['.js', '.less', '.json'],
-    extensions: ['.js'],
+    extensions: ['.js'],  //  指定js文件类型
     alias: { //  配置别名 加快webpack 查找模块速度,此处要思考  path.json() 和 path.resolve()的异同
-      actions: path.join(__dirname, 'fed/actions'),
-      reducers: path.join(__dirname, 'fed/reducers'),
-      components: path.join(__dirname, 'fed/components'),
-      constants: path.join(__dirname, 'fed/constants'),
-      utils: path.join(__dirname, 'fed/utils'),
-      '@': path.join(__dirname, 'fed'),
-      'redux-fetch-elegant': path.join(__dirname, 'fed/utils/redux-fetch-elegant')
+      views: path.join(__dirname, 'src/views'),
+      components: path.join(__dirname, 'src/components'),
+      constants: path.join(__dirname, 'src/constants'),
+      utils: path.join(__dirname, 'src/utils')
     }
   },
   performance: { // 配置展示性能测试
@@ -116,6 +113,7 @@ module.exports = {
       timings: true
     },
     // clientLogLevel: 'none'
+    historyApiFallback: true,
     headers: {
       'Access-Control-Allow-Origin': '*'
     }

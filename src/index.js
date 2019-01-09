@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import ReactDom from 'react-dom'
-import App from './app'
+import AppRouter from 'views/routes'
+
 
 ReactDom.render(
-  <App />, document.getElementById('container')
+  <AppRouter />, document.getElementById('container')
 )
