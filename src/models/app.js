@@ -1,3 +1,5 @@
+import Api from 'utils/axios'
+import Utils from 'utils'
 
 export default {
   state: {
@@ -12,9 +14,13 @@ export default {
     }
   },
   effects: (dispatch) => ({
-    async getAppUser(payload, rootState) {
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      this.setPageBaseValue(payload)
+    async getAppUser(params, rootState) {
+      const res = await Api.get('/leo/1.0/h5/login', {params})
+      console.log('res', res)
+      // this.setPageBaseValue(payload)
+    },
+    notify (payload) {
+      Utils.notify(payload)
     }
   })
 }

@@ -18,12 +18,10 @@ class App extends Component {
       collapsed: false
     }
   }
-
-  toggle() {
-    this.setState({
-      collapsed: !this.state.collapsed,
-    })
+  componentWillMount () {
+    this.props.actions.getAppUser({moblie:1, token: 1})
   }
+  
   render() {
     console.warn('app props', this.props)
     return (
@@ -68,6 +66,11 @@ class App extends Component {
       </Router>
     )
   }
+  toggle() {
+    this.setState({
+      collapsed: !this.state.collapsed,
+    })
+  }
 }
 const mapState = (state, ownProps) => {
   return ({
@@ -75,7 +78,10 @@ const mapState = (state, ownProps) => {
   })
 }
 const mapDispatch = (dispatch) => ({
-  ...dispatch.app
+  // 返回actios页面的方法执行this.props.actios
+  actions: {
+    ...dispatch.app
+  }
 })
 
 export default connect(mapState, mapDispatch)(App) ;

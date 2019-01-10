@@ -106,7 +106,7 @@ module.exports = {
     contentBase: path.join(__dirname, 'dist'),
     hot: true,
     host: 'localhost',
-    compress: true, // 服务器返回浏览器的时候是否启动gzip压缩
+    // compress: true, // 服务器返回浏览器的时候是否启动gzip压缩
     port: 9000,
     stats: {
       performance: true,
@@ -114,16 +114,22 @@ module.exports = {
     },
     // clientLogLevel: 'none'
     historyApiFallback: true,
-    headers: {
-      'Access-Control-Allow-Origin': '*'
+    // headers: {
+    //   'Access-Control-Allow-Origin': '*'
+    // },
+    proxy: {  // 设置接口匹配到leo，转发to
+      '/leo/**': {
+        target: 'http://odev.dian.so',
+        changeOrigin: true
+      },
     }
   },
   // watch: true, // 开启监听文件更改，自动刷新
-  // watchOptions: {
+  watchOptions: {
   //   ignored: /node_modules/, // 忽略不用监听变更的目录
-  //   aggregateTimeout: 500, // 防止重复保存频繁重新编译,500毫米内重复保存不打包
+    aggregateTimeout: 1000, // 防止重复保存频繁重新编译,500毫秒内重复保存不打包
   //   poll: 1000 // 每秒询问的文件变更的次数
-  // },
+  },
   plugins: [
     //  多入口的html文件用 chunks这个参数来区分
     new HtmlWebpackPlugin({
