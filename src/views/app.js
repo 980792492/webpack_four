@@ -19,11 +19,12 @@ class App extends Component {
     }
   }
   componentWillMount () {
-    this.props.actions.getAppUser({moblie:1, token: 1})
+    // this.props.actions.getAppUser({moblie:1, token: 1})
   }
   
   render() {
-    console.warn('app props', this.props)
+    // console.warn('app props', this.props)
+    // console.log('env', process, process.env.NODE_ENV)
     return (
       <Router history={history}>
         <Switch >

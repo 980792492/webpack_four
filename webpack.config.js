@@ -46,7 +46,7 @@ module.exports = {
       return assetFilename.endsWith('.css') || assetFilename.endsWith('.js') // 此选项只给出.css || .less性能提示
     }
   },
-  mode: 'development',
+  mode: 'development',  // mode默认设置全局development,可设置覆盖process.env.NODE_ENV
   devtool: 'inline-source-map',
   module: {
     rules: [
@@ -153,6 +153,9 @@ module.exports = {
     //   }
     // }),
 
+    // webpack3插件，Scope Hoisting，又译作“作用域提升”，文件体积更小，运行时创建函数作用域 更少， 开销更小
+    // new webpack.optimize.ModuleConcatenationPlugin()  
+
     // 该插件可以显示出编译之前的文件和编译之后的文件的映射,为了减少生成文件的体积，
     // webpack 使用了标识符而不是文件名。在编译期，标识符是生成的，对于于模块的文件名，并放置于叫做 chunk manifest 的 JavaScript 对象中。
     // 它（带着一些启动代码）被置于入口模块中，对于被 webpack 打包的代码来说极其关键。问题与之前相同：当我们更改了代码的任何一部分，
@@ -164,10 +167,10 @@ module.exports = {
     new webpack.NamedModulesPlugin(), // 开启HMR 将使用模块的相对路径，而不是数字标识符，建议用于开发环境
     // new webpack.HashedModuleIdsPlugin(),  // 生产环境用，会根据模块的相对路径生成一个四位数的hash作为模块id
     // new ExtractTextWebapckPlugin('css/[name].[hash].css'), // 这个特性只用于打包生产环境，测试环境这样设置会影响HMR
-    new webpack.HotModuleReplacementPlugin() //  启用 HMR
-    // new webpack.DefinePlugin({   //  允许创建一个在编译时可以配置的全局常量
-    //   'process.env.NODE_ENV': JSON.stringify('production')
-    // }),
+    new webpack.HotModuleReplacementPlugin(), //  启用 HMR
+    new webpack.DefinePlugin({   //  允许创建一个在编译时可以配置的全局常量
+      'process.env.NODE_ENV': JSON.stringify('local')
+    }),
     // new webpack.ProvidePlugin({
     //   join: ['lodash', 'join']   //  将lodash的join方法设置为 全局 join方法，不建议使用
     // }),
@@ -186,12 +189,15 @@ module.exports = {
     //   _: 'lodash' // 所有页面都会引入 _ 这个变量，不用再import引入，不建议使用
     // })
   ],
-  optimization: { // 提取公用代码
+  optimization: { // 提取公用代码, 公共模块自动抽出来，变成一个包，前提是这个包大于 30kb
     splitChunks: {
-      cacheGroups: {
+      cacheGroups: {  // 该配置项  类似之前的 CommonChunks 实例， cacheGroups 里每个对象就是一个用户定义的 chunk
         commons: {
           name: 'commons',
-          chunks: 'initial',
+          // chunks: 'initial',
+          chunks(chunk) {  //  将文件名不为 c 的 入口 的公共代码打包为 common  的 chunk
+            return chunk.name !== 'c';
+          },
           minChunks: 2
         }
       }
