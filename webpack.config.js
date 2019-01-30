@@ -2,7 +2,9 @@ const path = require('path')
 // const CopyWebpackPlugin = require('copy-webpack-plugin') // 复制静态资源的插件
 const HtmlWebpackPlugin = require('html-webpack-plugin') // 生成Html插件
 const CleanWebpackPlugin = require('clean-webpack-plugin') //   清空打包目录插件, clear 回滚有问题
-// const ExtractTextWebapckPlugin = require('extract-text-webpack-plugin')  // CSS文件单独提取出来
+// const ExtractTextWebapckPlugin = require('extract-text-webpack-plugin')  // CSS文件单独提取出来, w4已经弃用，只对css文件生效
+var WebpackMd5Hash = require('webpack-md5-hash')  // webpack的chunkhash根据文件内容生成hash
+ 
 const ManifestPlugin = require('webpack-manifest-plugin')
 const webpack = require('webpack')
 
@@ -23,7 +25,8 @@ module.exports = {
     // filename: 'bundle.js',
     // filename: '[name].bundle.js',
     // filename: '[name].[chunkhash].js', //  chunkhash 不可与 HMR 一起用
-    filename: '[name].[hash].js',
+    // filename: '[name].[hash].js',
+    chunkFilename: '[chunkhash].[id].chunk.js',
     path: path.resolve(__dirname, 'dist')
     // publicPath: '/'   //  这里放的是静态资源CDN的地址
   },
@@ -31,10 +34,13 @@ module.exports = {
     // extensions: ['.js', '.less', '.json'],
     extensions: ['.js'],  //  指定js文件类型
     alias: { //  配置别名 加快webpack 查找模块速度,此处要思考  path.json() 和 path.resolve()的异同
-      views: path.join(__dirname, 'src/views'),
-      components: path.join(__dirname, 'src/components'),
+      components: path.join(__dirname, 'src/components'),  
       constants: path.join(__dirname, 'src/constants'),
-      utils: path.join(__dirname, 'src/utils')
+      models: path.join(__dirname, 'src/models'),
+      routes: path.join(__dirname, 'src/routes'),
+      store: path.join(__dirname, 'src/store'),
+      utils: path.join(__dirname, 'src/utils'),
+      views: path.join(__dirname, 'src/views')
     }
   },
   performance: { // 配置展示性能测试
@@ -127,10 +133,12 @@ module.exports = {
   // watch: true, // 开启监听文件更改，自动刷新
   watchOptions: {
   //   ignored: /node_modules/, // 忽略不用监听变更的目录
-    aggregateTimeout: 1000, // 防止重复保存频繁重新编译,500毫秒内重复保存不打包
+    aggregateTimeout: 1000, // 防止重复保存频繁重新编译,1000毫秒内重复保存不打包
   //   poll: 1000 // 每秒询问的文件变更的次数
   },
   plugins: [
+    // webpack添加webpack-md5-hash插件，这个插件可以让webpack的chunkhash根据文件内容生成hash，相对稳定
+    // new WebpackMd5Hash(),
     //  多入口的html文件用 chunks这个参数来区分
     new HtmlWebpackPlugin({
       title: 'Output webpack four',
@@ -168,9 +176,9 @@ module.exports = {
     // new webpack.HashedModuleIdsPlugin(),  // 生产环境用，会根据模块的相对路径生成一个四位数的hash作为模块id
     // new ExtractTextWebapckPlugin('css/[name].[hash].css'), // 这个特性只用于打包生产环境，测试环境这样设置会影响HMR
     new webpack.HotModuleReplacementPlugin(), //  启用 HMR
-    new webpack.DefinePlugin({   //  允许创建一个在编译时可以配置的全局常量
-      'process.env.NODE_ENV': JSON.stringify('local')
-    }),
+    // new webpack.DefinePlugin({   //  允许创建一个在编译时可以配置的全局常量
+    //   'process.env.NODE_ENV': JSON.stringify('local')
+    // }),
     // new webpack.ProvidePlugin({
     //   join: ['lodash', 'join']   //  将lodash的join方法设置为 全局 join方法，不建议使用
     // }),

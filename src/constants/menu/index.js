@@ -1,17 +1,21 @@
 const MENU_CONFS =  [
   {
-    name: '网格管理',
+    name: '菜单1',
     child: [
       {
-        name: '新建网格',
-        route: '/channel/leads'
+        name: '菜单1-1',
+        route: '/menu1-1'
+      },
+      {
+        name: '菜单1-2',
+        route: '/menu1-2'
       }
     ]
   },
   {
     icon: 'icon-chukuguanli',
-    name: '商户管理',
-    route: '/shopManage/merchantList'
+    name: '菜单2',
+    route: '/menu2'
   }
 ]
 

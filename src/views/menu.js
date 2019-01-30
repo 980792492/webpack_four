@@ -71,7 +71,7 @@ export default class CustomMenu extends Component {
     if ( location.pathname === key) {
       return false
     } else {
-      Utils.router.push('/content')
+      Utils.router.push(key)
     }
   }
 }

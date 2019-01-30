@@ -10,7 +10,7 @@ export default function hightOviewWrap (loadingCheck, errorCheck) {
         console.warn('withLoading将会更新');
       }
       render () {
-        console.warn('this.props', this.props)
+        // console.warn('this.props', this.props)
         if (loadingCheck(this.props)) {
           return <Spin tip="加载中" size="large">
             {super.render()}

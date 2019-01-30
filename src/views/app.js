@@ -1,16 +1,15 @@
 import React, { Component } from "react";
-import { withRouter, Router, Switch, Route, Link } from "react-router-dom";
+import { Router, Switch, Route } from "react-router-dom";
 import { history } from 'utils/history'
 import { connect } from 'react-redux'
 
 import { Layout, Icon } from 'antd';
 const { Header, Sider, Content } = Layout;
 import Menu from 'views/menu'
-
 import style from './app.less'
 
+import CustomSwitch from 'routes'
 
-import CountView from 'views/count'
 class App extends Component {
   constructor(props) {
     super(props)
@@ -24,7 +23,7 @@ class App extends Component {
   
   render() {
     // console.warn('app props', this.props)
-    // console.log('env', process, process.env.NODE_ENV)
+    console.log('env', process.env, process.env.NODE_ENV)
     return (
       <Router history={history}>
         <Switch >
@@ -86,19 +85,3 @@ const mapDispatch = (dispatch) => ({
 })
 
 export default connect(mapState, mapDispatch)(App) ;
-
-
-
-class CustomSwitch extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {}
-  }
-  render() {
-    return (
-      <Switch>
-        <Route path='/content' component={CountView} />
-      </Switch>
-    )
-  }
-}

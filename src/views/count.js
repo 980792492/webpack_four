@@ -9,16 +9,14 @@ class CountView extends Component {
     this.state = {}
   }
   componentDidMount () {
+    console.log('aaa')
     this.timer = setTimeout(() => this.props.changeCount(), 3000)
   }
   render () {
-    // console.warn('count props', this.props)
     return (
       <div className='count-wrap'>
       1212
       {this.props.count}
-      {/* <p>姓名: {this.props.countDetail.headDetail.name}</p> */}
-      {/* <p>身高: {this.props.countDetail.headDetail.info.age}</p> */}
       <p>高阶: {this.props.test}</p>
       <p>性别：{this.props.countDetail && this.props.countDetail.headDetail}</p>
       </div>
@@ -40,7 +38,7 @@ function loadingCheck (props) {
 }
 
 function errorCheck (props) {
-  return props.error
+  return !props.error
 }
 
 // const CountViewPage = hightOviewWrap(props => !props.count)(CountView)
