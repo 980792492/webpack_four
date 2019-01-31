@@ -6,10 +6,11 @@ const isLocal = process.env.NODE_ENV === 'local'   // node环境上设置NODE_EN
 let presets = [
   ["@babel/preset-env",
     {
-    "modlues": false // 关闭babel的自动转化模块功能，保留ES6模块语法
-    }
+    "modlues": false, // 关闭babel的自动转化模块功能，保留ES6模块语法
+    useBuiltIns: "usage",  //  仅在需要的地方 polifill     
+  }
   ],
-  "@babel/preset-react"
+  "@babel/preset-react"   // 预设，转换 react 语法
 ]
 
 let plugins = [
@@ -24,8 +25,11 @@ let plugins = [
 
 if (isLocal) {    // 配置本地 开发 babel
   presets = [
-    "@babel/preset-env",
-    "@babel/preset-react"
+    ["@babel/preset-env", {
+      useBuiltIns: "usage",  //  仅在需要的地方 polifill 
+    }],
+    "@babel/preset-react",
+    '@babel/preset-typescript'
   ]
   //  本地开发 antd 全部打包进dll文件，不使用按需引用
   plugins =  [

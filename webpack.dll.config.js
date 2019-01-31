@@ -1,10 +1,9 @@
 const path = require('path');
 const webpack = require('webpack');
 const env = process.env.NODE_ENV
-const  isLocal = env === local
 module.exports = {
   entry: {
-    vendor: isLocal ? [
+    vendor: [
      //提前打包一些基本不怎么修改的文件
     'react',
     'react-dom',
@@ -14,9 +13,6 @@ module.exports = {
     'react-redux',
     'axios',
     'antd', 
-    ] : [
-      'react',
-      'react-dom',
     ]
   },
   output: {

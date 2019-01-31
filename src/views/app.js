@@ -8,6 +8,7 @@ const { Header, Sider, Content } = Layout;
 import Menu from 'views/menu'
 import style from './app.less'
 
+import LoginPage from 'views/login'
 import CustomSwitch from 'routes'
 
 class App extends Component {
@@ -27,8 +28,7 @@ class App extends Component {
     return (
       <Router history={history}>
         <Switch >
-          <Route path="/login" component={() => <div>login</div>} />
-        
+          <Route path="/login" component={ LoginPage } />
           <Route path="/" render={
             props => {
               return <Layout className='layout-content'>
