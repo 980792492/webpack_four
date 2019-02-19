@@ -1,0 +1,40 @@
+.layout-test{
+  // padding: 20px;
+  .content {
+    display: grid;   // 设置元素称为容器，它的直接子元素称为项目
+    width: 500px;
+    height: 500px;
+    grid-template-columns: 1fr 2fr 1fr;   // 设置子元素 列的 flex 为1
+    grid-template-rows: 1fr 2fr 1fr;      // 设置子元素 行的 flex 为1
+    //  这样就定义了一个三行三列的 grid 容器, grid-template-rows / grid-template-columns 接收的值有 auto、fr、px 和 %。
+
+    // grid-template-columns: [column-1] 1fr [column-2] 1fr [column-3] 1fr [column-4];
+    // grid-template-rows: [row-1] 1fr [row-2] 1fr [row-3] 1fr [row-4];
+    // 简写如下: 
+    // grid-template-columns: repeat(3, 1fr column);
+    // grid-template-rows: repeat(3, 1fr row);
+
+
+    grid-template-areas:
+    "header header header"
+    "main . sidebar"
+    "footer footer footer";  
+    > div {
+      border: 1px solid lightcoral;
+    }
+    .item1 {
+      grid-area: header;
+    }
+    .item2 {
+      grid-area: sidebar;
+    }
+    .item3 {
+      grid-area: main;
+    }
+    .item4 {
+      grid-area: footer;
+    }
+    grid-gap: 10px;  // 定义行与行，列与列之间的间隙 , 
+    //  在 Chrome 68+, Safari 11.2 Release 50+ and Opera 54+ 以上版本中，可以去掉 grid 前缀，而只需要些 row-gap、column-gap、gap 了。
+  }
+}

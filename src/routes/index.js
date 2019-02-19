@@ -2,11 +2,14 @@ import React, { Component } from 'react'
 import {  Switch, Route } from "react-router-dom";
 import Loadable from 'react-loadable';  //  按需加载
 
+import PagePath from 'routes/pagePath'
+
 
 
 function MyLoadingComponent() {
   return <div>Loading...</div>
 }
+
 
 const lazyLoad = (src) => {
   return Loadable({
@@ -22,7 +25,6 @@ const lazyLoad = (src) => {
 //   });
 // } 
 
-
 export default class CustomSwitch extends Component {
   constructor(props) {
     super(props)
@@ -34,12 +36,18 @@ export default class CustomSwitch extends Component {
         {/* 方法一*/} 
         {/* <Route path='/menu1-1' component={Loadable({ loader: () => import('views/count'), loading: MyLoadingComponent })} /> */}
         {/* 方法二， import() 不能接收完全变量  */}        
-        <Route path='/menu1-1' component={lazyLoad('count')} />
+        {/* <Route path='/menu1-1' component={lazyLoad('count')} /> */}
         {/* 方法三 */}
         {/* <Route path='/menu1-1' component={lazyLoad2(() => import('views/count'))} /> */}
         {/* <Route path='/menu1-2' component={lazyLoad2(() => import('views/view2'))} /> */}
         {/* <Route path='/menu1-2' component={this.lazyLoad('views/view2')} /> */}
         {/* <Route path='/menu2' component={this.lazyLoad('views/view3')} />  */}
+
+      {
+        PagePath.map((item,index) => (
+        <Route path={item.path} component={lazyLoad(item.src)} />
+        ))
+      }
       </Switch>
     )
   }

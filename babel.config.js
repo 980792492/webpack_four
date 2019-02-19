@@ -3,8 +3,10 @@ const isLocal = process.env.NODE_ENV === 'local'   // node环境上设置NODE_EN
 // 默认是development，但node环境中还是需要cross-env来设置。要在json里script中设置
 // mode 是 webpack 4 中新增加的参数选项，其有两个可选值：production 和 development。mode 不可缺省，需要二选一
 
+//  Preset ordering is reversed (last to first),  Plugin ordering is first to last.
+
 let presets = [
-  ["@babel/preset-env",
+  ["@babel/preset-env",  // 包含 [‘babel-preset-es2015’， ‘babel-preset-es2016’， ‘babel-preset-es2017’， ‘babel-preset-latest’]
     {
     "modlues": false, // 关闭babel的自动转化模块功能，保留ES6模块语法
     useBuiltIns: "usage",  //  仅在需要的地方 polifill     
